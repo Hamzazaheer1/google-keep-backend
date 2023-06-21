@@ -3,26 +3,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
-  branchName: {
-    type: String,
-  },
   name: {
-    type: String,
-  },
-  waiterRole: {
-    type: String,
-    enum: ["Head Waiter", "Chef", "Regular Waiter"],
-  },
-  userName: {
     type: String,
   },
   email: {
     type: String,
     lowercase: true,
-  },
-  role: {
-    type: String,
-    enum: ["ADMIN", "MANAGER", "WAITER"],
   },
   password: {
     type: String,
@@ -59,9 +45,9 @@ userSchema.methods.generateAuthToken = async function () {
   }
 };
 
-userSchema.methods.addMessage = async function (name, email, phone, message) {
+userSchema.methods.addMessage = async function (name, email) {
   try {
-    this.messages = this.messages.concat({ name, email, phone, message });
+    this.messages = this.messages.concat({ name, email });
     // await this.save();
     return this.message;
   } catch (err) {
