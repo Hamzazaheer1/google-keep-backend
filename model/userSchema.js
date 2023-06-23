@@ -45,9 +45,9 @@ userSchema.methods.generateAuthToken = async function () {
   }
 };
 
-userSchema.methods.addMessage = async function (name, email) {
+userSchema.methods.addMessage = async function (name, email, phone, message) {
   try {
-    this.messages = this.messages.concat({ name, email });
+    this.messages = this.messages.concat({ name, email, phone, message });
     // await this.save();
     return this.message;
   } catch (err) {

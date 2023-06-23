@@ -24,11 +24,17 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 exports.addNote = catchAsync(async (req, res, next) => {
   const { title, note } = req.body;
+  const userID = req.userID;
 
-  const data = new Note({ title, note });
+  const data = new Note({ title, note, userID });
   await data.save();
-  res.status(201).json({ message: "note added successfully" });
+  res.status(201).json({ message: "Note added successfully" });
 });
-exports.getMyNotes = catchAsync((req, res, next) => {
+exports.getMyNotes = catchAsync(async (req, res, next) => {
   const id = req.userID;
+  const notes = await Note.find({ userID: id });
+
+  res.status(200).json({ notes });
 });
+exports.updateNote = factory.updateOne(Note);
+exports.deleteNote = factory.deleteOne(Note);
